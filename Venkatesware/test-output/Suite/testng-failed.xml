@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]">
+  <test name="HGPlayerInterface(failed)">
+    <classes>
+      <class name="testbase.ExtentReportsClassVersion3">
+        <methods>
+          <include name="failTest"/>
+          <include name="endReport"/>
+          <include name="startReport"/>
+          <include name="skipTest"/>
+          <include name="getResult"/>
+        </methods>
+      </class> <!-- testbase.ExtentReportsClassVersion3 -->
+    </classes>
+  </test> <!-- HGPlayerInterface(failed) -->
+</suite> <!-- Failed suite [Suite] -->
