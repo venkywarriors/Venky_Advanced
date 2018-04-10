@@ -1,0 +1,14 @@
+def readDataRowAndColumns(column,row,sheetname):
+    try:
+        if os.path.isfile(Excel_path)== True :
+            print("opens "+Excel_path)
+            excel_document = openpyxl.load_workbook(Excel_path)
+            try: #KeyError:
+                sheet = excel_document.get_sheet_by_name(str(sheetname))
+            except KeyError as e:    
+                print('Worksheet'+ str(sheetname) +' does not exist '+e.value)
+            return sheet.cell(row=int(row),column=int(column)).value
+    except FileNotFoundError as e:
+        print('FileNotFoundError , value:', e.value)
+    except Exception as e:
+        print( e.value) 
