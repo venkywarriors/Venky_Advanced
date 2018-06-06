@@ -1,4 +1,4 @@
-######TestNG Time-Out Test
+TestNG Time-Out Test
 
 
 
