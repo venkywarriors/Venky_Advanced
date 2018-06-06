@@ -4,7 +4,8 @@ Enabling and Disabling TestNG Test
    @Test(enabled=true) - This test will be executed as the enabled property is true.
    @Test(enabled=false) - This test will NOT be executed as the enabled property is false.
    
-2.Using Include and Exclude tags in the testng.xml file:   
+2.Using Include and Exclude tags in the testng.xml file:
+
 <suite name="Suite">
   <test name="Test">
     <classes>
@@ -18,4 +19,5 @@ Enabling and Disabling TestNG Test
     </classes>
   </test>
 </suite>
+
 But after execution we are seeing only one test is getting executed(i.e. firstTest) and remaining tests (i.e. secondTest and thirdTest) are skipped from the execution.
