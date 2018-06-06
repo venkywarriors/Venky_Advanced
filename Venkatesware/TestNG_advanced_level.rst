@@ -29,14 +29,11 @@ But after execution we are seeing only one test is getting executed(i.e. firstTe
 **expectedExceptions in TestNG**
 
 ```
-public class ExceptionTest
-{
-    @Test(expectedExceptions={ArithmeticException.class})
+@Test(expectedExceptions={ArithmeticException.class})
     
     public void exceptionTesting()
     {
         int i = 1/0;
       System.out.println("Value of i :" + i);
     }
-}
 ```
