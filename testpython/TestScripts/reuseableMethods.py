@@ -81,7 +81,7 @@ def doubleClickAnElement(webelementToClick):
 
 
 
-driver = webdriver.Chrome("C:\\Users\\venkateshwara.d\\eclipse-workspace\\hghtml5\\drivers\\chromedriver.exe")
+driver = webdriver.Chrome("C:\\Users\\venkateshwara.d\\eclipse-workspace\\chromedriver.exe")
 driver.set_page_load_timeout(20)
 driver.maximize_window()
 driver.get('https://python.org')
