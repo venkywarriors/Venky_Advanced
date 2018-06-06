@@ -9,7 +9,7 @@
    @Test(enabled=false) - This test will NOT be executed as the enabled property is false.
    
 2.Using Include and Exclude tags in the testng.xml file:
-'''
+
 <suite name="Suite">
   <test name="Test">
     <classes>
@@ -23,24 +23,20 @@
     </classes>
   </test>
 </suite>
-'''
+
 But after execution we are seeing only one test is getting executed(i.e. firstTest) and remaining tests (i.e. secondTest and thirdTest) are skipped from the execution.
 
 **expectedExceptions in TestNG**
 
-
+```
 public class ExceptionTest
 {
-
     @Test(expectedExceptions={ArithmeticException.class})
     
     public void exceptionTesting()
     {
-    
         int i = 1/0;
-        
-        System.out.println("Value of i :" + i);
-        
+      System.out.println("Value of i :" + i);
     }
 }
-
+```
