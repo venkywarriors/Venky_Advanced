@@ -13,9 +13,26 @@ Shutterbug.shootPage(driver,ScrollStrategy.VERTICALLY).withName(screen_timestamp
 ```Java
 driver.findElements(By.id("element-id")).size()!=0
 ```
-### :dart:Whether a webelement exist or not-
+### :dart:How to declare webdriver and use the same in another class-
 ```Java
-driver.findElements(By.id("element-id")).size()!=0
+public class Superclass
+{
+public WebDriver driver;
+public Superclass(){
+driver = new FirefoxDriver();
+}
+public WebDriver getdriver(){
+if (driver == null){
+driver = new FirefoxDriver();
+return driver;
+}else{
+return driver;
+}
+}
+}
+
+//In other class, call like below syntax
+getdriver().findelement(by.xpath("xpath").click());
 ```
 ### :dart:Working on frame-
 ```Java
