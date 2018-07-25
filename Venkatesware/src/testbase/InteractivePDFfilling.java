@@ -38,10 +38,6 @@ public class InteractivePDFfilling {
         fields.get("Language 3 Check Box").setValue("Yes");
         fields.get("Language 4 Check Box").setValue("Off");
         fields.get("Language 5 Check Box").setValue("Yes");
-        
-        for (Map.Entry<String, PdfFormField> entry : fields.entrySet()) {
-             System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue().getValueAsString());
-        }
         pdf.close();
 		System.out.println("completed");
 	}
