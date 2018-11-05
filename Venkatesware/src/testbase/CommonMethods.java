@@ -53,10 +53,24 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class CommonMethods 
 {
-	
 	String path=System.getProperty("user.dir");
-
 	protected WebDriver driver;
+	
+	public void waitForPageToLoad(int wait_time)
+	{
+	 driver.manage().timeouts().pageLoadTimeout(wait_time, TimeUnit.SECONDS);	
+	}
+	
+	 public void waitForLoad(WebDriver driver, int time) {
+        ExpectedCondition<Boolean> pageLoadCondition = new
+                ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
+                    }
+                };
+        WebDriverWait wait = new WebDriverWait(driver,time);
+        wait.until(pageLoadCondition);
+    }
 	public void FullPageScreenShot(String FileName)
 	{
 	  Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
