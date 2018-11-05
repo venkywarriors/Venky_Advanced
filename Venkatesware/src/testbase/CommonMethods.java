@@ -54,17 +54,23 @@ public class CommonMethods
 	String path=System.getProperty("user.dir");
 
 	protected WebDriver driver;
-		
+	
+	public void OpenNewTab()
+	{ 
+		ArrayList<String> tabBefore = new ArrayList<String>(driver.getWindowHandle());
+		System.out.println("Total no. of tab are " + tabBefore.size());
+		((JavascriptExecutor) driver).executeScript("window.open()");
+		ArrayList<String> tabAfter = new ArrayList<String>(driver.getWindowHandle());
+		driver.switchTo().window(tabAfter.get(tabBefore.size())); 
+	}	
+	
 	public void HighlightMyElement(WebElement element) throws InterruptedException {
 
 		JavascriptExecutor javascript = (JavascriptExecutor) driver;
 		javascript.executeScript("arguments[0].setAttribute('style', arguments[1]);", element,
 				"color: blue; border: 4px solid blue;");
-
 		Thread.sleep(250);
-
 		javascript.executeScript("arguments[0].setAttribute('style', arguments[1]);", element, "");
-
 	}
 	
 	protected int invalidImageCount;
@@ -144,8 +150,21 @@ public class CommonMethods
 			}
 		}
 
-	 	 
-	 
+	public boolean perform_AvoidStale(WebElement element,int wait_time)
+	{
+	boolean found = true;
+	WebDriverWait wait;
+	while(found)
+	{
+	try{
+		wait = new WebDriverWait(driver,wait_time);
+		wait.Until(ExpectedConditions.visibilityOf(element));
+		break;
+	}catch(StaleElementReferenceException e){ }
+	}
+		return found;
+	}
+	
 	protected void press_enter_key() throws AWTException
 	{
 		Robot robot = new Robot();
