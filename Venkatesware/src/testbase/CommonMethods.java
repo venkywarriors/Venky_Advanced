@@ -72,6 +72,16 @@ public class CommonMethods
 		return elementFound;
 	}
 	
+	public void Clickelement(WebElement element){
+	try{
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.elementToBeClickable(element);
+		element.click();
+		}catch(Exception e){
+			System.out.println("element not clickable");
+		}
+		
+	}
 	public void clickJE(WebElement element, int wait_time)
 	{
 	int attempt =1;
