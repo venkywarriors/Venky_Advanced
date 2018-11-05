@@ -56,6 +56,22 @@ public class CommonMethods
 	String path=System.getProperty("user.dir");
 	protected WebDriver driver;
 	
+	public boolean elementPresnt(WebElement element, int wait_time)
+	{
+		boolean elementFound = false;
+		try
+		{
+		WebDriverWait wait = new WebDriverWait(driver, wait_time);
+		wait.until(ExpectedConditions.visibilityOf(element);
+			   if(element.isDisplayed() || element.isEnabled())
+			   {
+				   elementFound = true;
+			   }
+		}catch(Exception e)
+		{elementFound = false;}
+		return elementFound;
+	}
+	
 	public void clickJE(WebElement element, int wait_time)
 	{
 	int attempt =1;
