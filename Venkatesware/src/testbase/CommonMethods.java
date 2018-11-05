@@ -47,6 +47,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class CommonMethods 
 {
@@ -54,6 +57,12 @@ public class CommonMethods
 	String path=System.getProperty("user.dir");
 
 	protected WebDriver driver;
+	public void FullPageScreenShot(String FileName)
+	{
+	  Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
+  	  ImageIO.write(screenshot.getImage(),"PNG",new                              
+          File(path +"/Screenshots/+"+FileName+".png"));	
+	}
 	
 	public void OpenNewTab()
 	{ 
@@ -163,6 +172,22 @@ public class CommonMethods
 	}catch(StaleElementReferenceException e){ }
 	}
 		return found;
+	}
+	
+	public string getBrowserName()
+	{
+		Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
+		String browserName = cap.getBrowserName().toLowerCase();
+		// String os = cap.getPlatform().toString();
+    		// String version = cap.getVersion().toString();
+    		// System.out.println("os "+os+" version "+version);
+		return browserName.trim();
+	}
+	
+	public void Clck_Hidden_Element(WebElement element)
+	{
+		String js = "arguments[0].style.height='auto'; arguments[0].style.visibility='visible';";
+		((JavascriptExecutor) yourWebDriverInstance).executeScript(js, element);
 	}
 	
 	protected void press_enter_key() throws AWTException
