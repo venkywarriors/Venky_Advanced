@@ -61,15 +61,20 @@ public class CommonMethods
 	 driver.manage().timeouts().pageLoadTimeout(wait_time, TimeUnit.SECONDS);	
 	}
 	
-	 public void waitForLoad(WebDriver driver, int time) {
-        ExpectedCondition<Boolean> pageLoadCondition = new
+	 public void waitForPageLoaded(int time) {
+        ExpectedCondition<Boolean> expectation = new
                 ExpectedCondition<Boolean>() {
                     public Boolean apply(WebDriver driver) {
-                        return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
+                        return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
                     }
                 };
-        WebDriverWait wait = new WebDriverWait(driver,time);
-        wait.until(pageLoadCondition);
+        try {
+            Thread.sleep(1000);
+            WebDriverWait wait = new WebDriverWait(driver, time);
+            wait.until(expectation);
+        } catch (Throwable error) {
+            Assert.fail("Timeout waiting for Page Load Request to complete.");
+        }
     }
 	public void FullPageScreenShot(String FileName)
 	{
