@@ -56,6 +56,19 @@ public class CommonMethods
 	String path=System.getProperty("user.dir");
 	protected WebDriver driver;
 	
+	public void clickJE(WebElement element, int wait_time)
+	{
+	int attempt =1;
+	while(attempt < 6)
+	{
+		try{
+		WebDriverWait wait = new WebDriverWait(driver, wait_time);
+		wait.until(ExpectedConditions.elementToBeClickable(element);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+		}catch(Exception e){}
+		attempt++;
+	}	
+	}
 	public void waitForPageToLoad(int wait_time)
 	{
 	 driver.manage().timeouts().pageLoadTimeout(wait_time, TimeUnit.SECONDS);	
