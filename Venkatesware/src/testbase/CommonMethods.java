@@ -70,14 +70,7 @@ public class CommonMethods
 			}
 		}
 	}
-	public void waitForPageToLoad()
-	{
-		try{
-		driver.manage().timeouts().pageLoadTimeout(3, TimeUnit.MINUTES);
-		}catch(exception e){
-			System.out.println("Page load Timeout");
-		}
-	}
+
 	public boolean elementPresnt(WebElement element, int wait_time)
 	{
 		boolean elementFound = false;
@@ -119,7 +112,11 @@ public class CommonMethods
 	}
 	public void waitForPageToLoad(int wait_time)
 	{
-	 driver.manage().timeouts().pageLoadTimeout(wait_time, TimeUnit.SECONDS);	
+		try{
+		driver.manage().timeouts().pageLoadTimeout(wait_time, TimeUnit.SECONDS);
+		}catch(exception e){
+			System.out.println("Page load Timeout");
+		}
 	}
 	
 	 public void waitForPageLoaded(int time) {
