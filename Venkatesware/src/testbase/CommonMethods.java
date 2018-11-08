@@ -56,6 +56,14 @@ public class CommonMethods
 	String path=System.getProperty("user.dir");
 	protected WebDriver driver;
 	
+	public void waitForPageToLoad()
+	{
+		try{
+		driver.manage().timeouts().pageLoadTimeout(3, TimeUnit.MINUTES);
+		}catch(exception e){
+			System.out.println("Page load Timeout");
+		}
+	}
 	public boolean elementPresnt(WebElement element, int wait_time)
 	{
 		boolean elementFound = false;
