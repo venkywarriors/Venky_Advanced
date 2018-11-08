@@ -55,6 +55,17 @@ public class CommonMethods
 {
 	String path=System.getProperty("user.dir");
 	protected WebDriver driver;
+	
+	public void waitTextToBePresentInElement(String text,WebElement element)
+	{
+		try
+		{
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
 	public disableElement(String Element)
 	{
 		 JavascriptExecutor javascript = (JavascriptExecutor) driver;
