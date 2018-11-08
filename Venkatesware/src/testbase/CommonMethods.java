@@ -55,7 +55,19 @@ public class CommonMethods
 {
 	String path=System.getProperty("user.dir");
 	protected WebDriver driver;
-	
+	public disableElement(String Element)
+	{
+		 JavascriptExecutor javascript = (JavascriptExecutor) driver;
+  		String todisable = "document.getElementsByName('"+Element+"')[0].setAttribute('disabled', '');";
+  		javascript.executeScript(todisable);
+  		Thread.sleep(2000);
+	}
+	public mouseOver(WebElement moveonmenu)
+	{
+		Actions actions = new Actions(driver);
+		actions.moveToElement(moveonmenu);
+		actions.perform();
+	}
 	public void SwitchToNewWindow(String title,String page)
 	{
 		WebDriver popup =null;
