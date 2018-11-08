@@ -56,6 +56,20 @@ public class CommonMethods
 	String path=System.getProperty("user.dir");
 	protected WebDriver driver;
 	
+	public void SwitchToNewWindow(String title,String page)
+	{
+		WebDriver popup =null;
+		Set<String> handle= driver.getWindowHandles();
+		for (String handle : driver.getWindowHandles()) 
+		{
+    		popup = driver.switchTo().window(handle);
+			if(popup.getTitle().equals(title) || popup.getCurrentUrl().contains(title))
+			{
+				System.out.println("switched to new sucessfully");
+				break;
+			}
+		}
+	}
 	public void waitForPageToLoad()
 	{
 		try{
