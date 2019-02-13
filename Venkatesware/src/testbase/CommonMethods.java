@@ -57,20 +57,20 @@ public class CommonMethods
 	protected WebDriver driver;
 	
 	public void mouseOver(WebElement element)
-{
+	{
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].onmouseover()", element); 
-}
+	}
 
-public void mouseOverJE(WebElement element)
-{
-String javaScript = "var evObj = document.createEvent('MouseEvents');" +
-       "evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);" + "arguments[0].dispatchEvent(evObj);";
- JavascriptExecutor js = (JavascriptExecutor) driver;
- js.executeScript(javaScript,element);
-}
+	public void mouseOverJE(WebElement element)
+	{
+	String javaScript = "var evObj = document.createEvent('MouseEvents');" +
+   		"evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);" 
+		+ "arguments[0].dispatchEvent(evObj);";
+ 	JavascriptExecutor js = (JavascriptExecutor) driver;
+ 	js.executeScript(javaScript,element);
+	}
 
-	
 	public void waitTextToBePresentInElement(String text,WebElement element)
 	{
 		try
