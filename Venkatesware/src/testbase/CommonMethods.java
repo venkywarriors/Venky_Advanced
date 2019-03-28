@@ -70,7 +70,13 @@ public class CommonMethods
  	JavascriptExecutor js = (JavascriptExecutor) driver;
  	js.executeScript(javaScript,element);
 	}
-
+	pubic String RemoveTrailingZero(String string)
+	{
+		String removedString ="";
+		BigDecimal bigDecimal = new BigDecimal(string);
+		removedString=bigDecimal.toPlainString();
+		return removedString.toString().trim();
+	}
 	public void waitTextToBePresentInElement(String text,WebElement element)
 	{
 		try
