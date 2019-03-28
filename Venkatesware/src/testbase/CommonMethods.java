@@ -61,6 +61,13 @@ public class CommonMethods
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].onmouseover()", element); 
 	}
+	public void sendkeysJS(WebElement element,String value)
+	{
+	   element.clear();
+	    element.click();
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].value=value='"+value+"';", element); 
+	}
 
 	public void mouseOverJE(WebElement element)
 	{
@@ -283,14 +290,17 @@ public class CommonMethods
 	public boolean perform_AvoidStale(WebElement element,int wait_time)
 	{
 	boolean found = true;
-	WebDriverWait wait;
-	while(found)
+	WebDriverWait wait=(WebDriverWait)new WebDriverWait(driver,30)
+		.ignoring(StaleElementReferenceException.class);
+	for(int i=1;i<=5;i++)
 	{
 	try{
-		wait = new WebDriverWait(driver,wait_time);
-		wait.Until(ExpectedConditions.visibilityOf(element));
+		wait.Until(ExpectedConditions.refreshed(ExpectedConditions.stalenessof(element)));
 		break;
-	}catch(StaleElementReferenceException e){ }
+	}catch(StaleElementReferenceException e)
+	{
+		((JavascriptExecutor) driver).executeScript("history.go(0)");
+	}
 	}
 		return found;
 	}
@@ -308,7 +318,7 @@ public class CommonMethods
 	public void Clck_Hidden_Element(WebElement element)
 	{
 		String js = "arguments[0].style.height='auto'; arguments[0].style.visibility='visible';";
-		((JavascriptExecutor) yourWebDriverInstance).executeScript(js, element);
+		((JavascriptExecutor) driver).executeScript(js, element);
 	}
 	
 	protected void press_enter_key() throws AWTException
