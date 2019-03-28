@@ -63,6 +63,7 @@ public class CommonMethods
 	}
 	public static Boolean isVisibleInViewport(WebElement element) {
  // check element available in visible screen area
+		// https://stackoverflow.com/questions/45243992/
  	 return (Boolean)((JavascriptExecutor)driver).executeScript(
       "var elem = arguments[0],                 " +
       "  box = elem.getBoundingClientRect(),    " +
