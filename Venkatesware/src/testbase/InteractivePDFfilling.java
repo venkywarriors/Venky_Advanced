@@ -1,10 +1,12 @@
-inimport java.io.IOException;
+package testbase;
+
+import java.io.IOException;
 import java.util.Map;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfReader;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.forms.PdfAcroForm;
-import com.itextpdf.forms.fields.PdfFormField;
+// import com.itextpdf.kernel.pdf.PdfDocument;
+//import com.itextpdf.kernel.pdf.PdfReader;
+//import com.itextpdf.kernel.pdf.PdfWriter;
+//import com.itextpdf.forms.PdfAcroForm;
+//import com.itextpdf.forms.fields.PdfFormField;
 
 public class InteractivePDFfilling {
 
@@ -14,7 +16,9 @@ public class InteractivePDFfilling {
 // https://mvnrepository.com/artifact/com.itextpdf/kernel 
 //  https://mvnrepository.com/artifact/com.itextpdf/forms
 //   https://mvnrepository.com/artifact/com.itextpdf/pdftest
-		String originalPdf = "D:\\interactivePDFs\\OoPdfFormExample.pdf";
+		
+/*
+  String originalPdf = "D:\\interactivePDFs\\OoPdfFormExample.pdf";
 		String targetPdf = "D:\\interactivePDFs\\OoPdfFormExample_filled.pdf";
 	
         PdfDocument pdf = new PdfDocument(new PdfReader(originalPdf), new PdfWriter(targetPdf));
@@ -38,7 +42,7 @@ public class InteractivePDFfilling {
         fields.get("Language 3 Check Box").setValue("Yes");
         fields.get("Language 4 Check Box").setValue("Off");
         fields.get("Language 5 Check Box").setValue("Yes");
-        pdf.close();
+        pdf.close();     */
 		System.out.println("completed");
 	}
 

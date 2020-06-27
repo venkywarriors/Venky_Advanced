@@ -1,3 +1,4 @@
+package testbase;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.By;
@@ -7,7 +8,7 @@ import org.openqa.selenium.WebElement;
 
 public class HandlingAuthenticationPopup {
   	public static String path = System.getProperty("user.dir");
-  	public static WebDriver drive;
+  	public static WebDriver driver;
   
   public static void main(String[] args) throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver","D:\\drivers\\chromedriver.exe");

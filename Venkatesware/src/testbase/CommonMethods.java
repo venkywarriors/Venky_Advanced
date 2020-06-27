@@ -1,4 +1,4 @@
-package ragavendraPackage;
+package testbase;
 
 import java.awt.AWTException;
 import java.awt.Rectangle;
@@ -10,8 +10,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
@@ -38,15 +43,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
@@ -54,9 +63,9 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 public class CommonMethods 
 {
 	String path=System.getProperty("user.dir");
-	protected WebDriver driver;
+	protected static WebDriver driver;
 	
-	public void mouseOver(WebElement element)
+	public void mouseOver1(WebElement element)
 	{
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("arguments[0].onmouseover()", element); 
@@ -93,7 +102,7 @@ public class CommonMethods
  	JavascriptExecutor js = (JavascriptExecutor) driver;
  	js.executeScript(javaScript,element);
 	}
-	pubic String RemoveTrailingZero(String string)
+	public String removeTrailingZero(String string)
 	{
 		String removedString ="";
 		BigDecimal bigDecimal = new BigDecimal(string);
@@ -110,14 +119,14 @@ public class CommonMethods
 			System.out.println(e.getMessage());
 		}
 	}
-	public disableElement(String Element)
+	public void disableElement(WebElement Element) throws InterruptedException
 	{
 		 JavascriptExecutor javascript = (JavascriptExecutor) driver;
   		String todisable = "document.getElementsByName('"+Element+"')[0].setAttribute('disabled', '');";
   		javascript.executeScript(todisable);
   		Thread.sleep(2000);
 	}
-	public mouseOver(WebElement moveonmenu)
+	public void mouseOver(WebElement moveonmenu)
 	{
 		Actions actions = new Actions(driver);
 		actions.moveToElement(moveonmenu);
@@ -127,9 +136,9 @@ public class CommonMethods
 	{
 		WebDriver popup =null;
 		Set<String> handle= driver.getWindowHandles();
-		for (String handle : driver.getWindowHandles()) 
+		for (String handl : driver.getWindowHandles()) 
 		{
-    		popup = driver.switchTo().window(handle);
+    		popup = driver.switchTo().window(handl);
 			if(popup.getTitle().equals(title) || popup.getCurrentUrl().contains(title))
 			{
 				System.out.println("switched to new sucessfully");
@@ -144,7 +153,7 @@ public class CommonMethods
 		try
 		{
 		WebDriverWait wait = new WebDriverWait(driver, wait_time);
-		wait.until(ExpectedConditions.visibilityOf(element);
+		wait.until(ExpectedConditions.visibilityOf(element));
 			   if(element.isDisplayed() || element.isEnabled())
 			   {
 				   elementFound = true;
@@ -157,7 +166,7 @@ public class CommonMethods
 	public void Clickelement(WebElement element){
 	try{
 		WebDriverWait wait = new WebDriverWait(driver, 20);
-		wait.until(ExpectedConditions.elementToBeClickable(element);
+		wait.until(ExpectedConditions.elementToBeClickable(element));
 		element.click();
 		}catch(Exception e){
 			System.out.println("element not clickable");
@@ -171,7 +180,7 @@ public class CommonMethods
 	{
 		try{
 		WebDriverWait wait = new WebDriverWait(driver, wait_time);
-		wait.until(ExpectedConditions.elementToBeClickable(element);
+		wait.until(ExpectedConditions.elementToBeClickable(element));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
 		}catch(Exception e){}
 		attempt++;
@@ -181,7 +190,7 @@ public class CommonMethods
 	{
 		try{
 		driver.manage().timeouts().pageLoadTimeout(wait_time, TimeUnit.SECONDS);
-		}catch(exception e){
+		}catch(Exception e){
 			System.out.println("Page load Timeout");
 		}
 	}
@@ -201,20 +210,19 @@ public class CommonMethods
             Assert.fail("Timeout waiting for Page Load Request to complete.");
         }
     }
-	public void FullPageScreenShot(String FileName)
+	public void FullPageScreenShot(String FileName) throws IOException
 	{
 	  Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
-  	  ImageIO.write(screenshot.getImage(),"PNG",new                              
-          File(path +"/Screenshots/+"+FileName+".png"));	
+  	  ImageIO.write(screenshot.getImage(),"PNG",new File(path +"/Screenshots/+"+FileName+".png"));	
 	}
 	
 	public void OpenNewTab()
 	{ 
-		ArrayList<String> tabBefore = new ArrayList<String>(driver.getWindowHandle());
-		System.out.println("Total no. of tab are " + tabBefore.size());
+		ArrayList<String> oldTab = new ArrayList<String>(driver.getWindowHandles());
+		System.out.println("Total no. of tab are " + oldTab.size());
 		((JavascriptExecutor) driver).executeScript("window.open()");
-		ArrayList<String> tabAfter = new ArrayList<String>(driver.getWindowHandle());
-		driver.switchTo().window(tabAfter.get(tabBefore.size())); 
+		ArrayList<String> tabAfter = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(tabAfter.get(oldTab.size())); 
 	}	
 	
 	public void HighlightMyElement(WebElement element) throws InterruptedException {
@@ -311,7 +319,7 @@ public class CommonMethods
 	for(int i=1;i<=5;i++)
 	{
 	try{
-		wait.Until(ExpectedConditions.refreshed(ExpectedConditions.stalenessof(element)));
+		wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(element)));
 		break;
 	}catch(StaleElementReferenceException e)
 	{
@@ -321,14 +329,15 @@ public class CommonMethods
 		return found;
 	}
 	
-	public string getBrowserName()
+	public void getBrowserName()
 	{
-		Capabilities cap = ((RemoteWebDriver) driver).getCapabilities();
-		String browserName = cap.getBrowserName().toLowerCase();
-		// String os = cap.getPlatform().toString();
-    		// String version = cap.getVersion().toString();
-    		// System.out.println("os "+os+" version "+version);
-		return browserName.trim();
+		Capabilities cap = ((RemoteWebDriver)driver).getCapabilities();
+	    String browserName = cap.getBrowserName().toLowerCase();
+	    System.out.println(browserName);
+	    String os = cap.getPlatform().toString();
+	    System.out.println(os);
+	    String v = cap.getVersion().toString();
+	    System.out.println(v);
 	}
 	
 	public void Clck_Hidden_Element(WebElement element)
@@ -460,15 +469,9 @@ public class CommonMethods
 	    return lastModifiedFile;
 	}
 
-	
-
-	
-
 	@SuppressWarnings("deprecation")
-	public static  String readData(int coloum, int rows,  String sheetname) throws IOException
+	public static  String readData(int coloum, int rows,  String sheetname) throws Exception
 	{
-
-
 		String data=null;
 		Workbook wb=null;
 		String fileName="Testdata.xlsx";
@@ -497,7 +500,7 @@ public class CommonMethods
 	}
 
 	@SuppressWarnings({ "null", "deprecation" })
-	public void writeData(int coloum, int rows, String text, String sheetname, String color) throws EncryptedDocumentException, InvalidFormatException, IOException
+	public void writeData(int coloum, int rows, String text, String sheetname, String color) throws Exception
 	{
 		Workbook wb1=null;
 		Sheet sheet;
@@ -590,10 +593,9 @@ public class CommonMethods
 		fileOut.close();
 
 	}
-
-
+	
 	@SuppressWarnings({ "null", "deprecation" })
-	public void writeData_TC(int coloum, int rows, String text, String sheetname, String color) throws EncryptedDocumentException, InvalidFormatException, IOException
+	public void writeData_TC(int coloum, int rows, String text, String sheetname, String color) throws Exception
 	{
 		Workbook wb1=null;
 		Sheet sheet;
@@ -686,7 +688,7 @@ public class CommonMethods
 
 
 	@SuppressWarnings({ "null", "deprecation" })
-	public void writeData_TD(int coloum, int rows, String text, String sheetname, String color) throws EncryptedDocumentException, InvalidFormatException, IOException
+	public void writeData_TD(int coloum, int rows, String text, String sheetname, String color) throws Exception
 	{
 		Workbook wb1=null;
 		Sheet sheet;
@@ -780,7 +782,7 @@ public class CommonMethods
 
 
 
-	public void executionDetail() throws EncryptedDocumentException, InvalidFormatException, IOException
+	public void executionDetail() throws Exception
 	{
 		writeData(1, 4, "Selenium with Sikuli", "Testcases", "Black");
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -1549,9 +1551,6 @@ public class CommonMethods
 			}
 		}
 	}*/
-
-
-
 
 	public void getscreenshot_Pass(String tc_name) throws Exception 
 	{
